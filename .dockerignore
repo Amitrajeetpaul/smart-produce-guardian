@@ -1,0 +1,9 @@
+data
+node_modules
+.DS_Store
+*.docx
+*.pdf
+firmware
+test
+simulator.js
+.vercel

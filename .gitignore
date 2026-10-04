@@ -1,0 +1,13 @@
+data/
+node_modules/
+.DS_Store
+*.db
+*.db-*
+.vercel
+.env*
+firmware/guardian/config.local.h
+*.docx
+*.pdf
+.agents/
+.claude/
+skills-lock.json

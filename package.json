@@ -1,0 +1,17 @@
+{
+  "name": "smart-produce-guardian",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend + dashboard for the Smart Produce Guardian crate monitor",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node cli.js",
+    "simulate": "node simulator.js",
+    "test": "node --test test/api.test.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.18.0"
+  }
+}

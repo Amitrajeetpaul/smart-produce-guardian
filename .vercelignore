@@ -1,0 +1,8 @@
+data
+test
+firmware
+simulator.js
+*.docx
+*.pdf
+Dockerfile
+.dockerignore

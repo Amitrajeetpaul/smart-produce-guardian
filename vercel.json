@@ -1,0 +1,15 @@
+{
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index"
+    }
+  ],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{views/**,lib/**}",
+      "maxDuration": 30
+    }
+  }
+}

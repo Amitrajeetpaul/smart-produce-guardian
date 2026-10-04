@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — Smart Produce Guardian</title>
+<style>
+  :root{ --ink:#17150F; --ink-soft:#5A5540; --kraft:#E7E1CE; --raised:#F6F2E5; --line:#CFC7A9; --sunk:#DAD2B8;
+         --petrol:#1C6B64; --petrol-strong:#0F4B46; --alert:#B13A28; --alert-bg:#F2D9D0; color-scheme:light; }
+  @media (prefers-color-scheme: dark){ :root{ --ink:#ECE6D2; --ink-soft:#B6AE90; --kraft:#131209; --raised:#1C1A10; --line:#36321F; --sunk:#0D0C06;
+         --petrol:#5AC2B6; --petrol-strong:#86D9CE; --alert:#E8795F; --alert-bg:#38211B; color-scheme:dark; } }
+  *{box-sizing:border-box}
+  body{margin:0; min-height:100vh; display:grid; place-items:center; padding:24px 16px; background:var(--kraft); color:var(--ink);
+       font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{width:100%; max-width:360px}
+  .eyebrow{font:600 .68rem/1 ui-monospace,Menlo,monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--petrol); margin:0 0 10px}
+  h1{font:900 1.9rem/1.05 "Arial Black",Impact,system-ui,sans-serif; text-transform:uppercase; margin:0 0 6px}
+  h1 span{color:var(--petrol)}
+  p.sub{margin:0 0 22px; color:var(--ink-soft); font-size:.9rem}
+  form{background:var(--raised); border:1px solid var(--line); border-radius:20px; padding:20px; display:flex; flex-direction:column; gap:14px;
+       box-shadow:0 24px 48px -24px rgba(23,21,15,.3)}
+  label{font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:5px}
+  input{width:100%; font:inherit; padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:var(--sunk); color:var(--ink)}
+  input:focus-visible,button:focus-visible{outline:2px solid var(--petrol-strong); outline-offset:2px}
+  button{font:600 .95rem system-ui,sans-serif; padding:11px; border-radius:10px; border:0; background:var(--petrol); color:var(--raised); cursor:pointer}
+  button:disabled{opacity:.6; cursor:default}
+  .err{background:var(--alert-bg); color:var(--ink); border:1px solid var(--alert); border-radius:10px; padding:9px 11px; font-size:.82rem}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Live crate monitoring</p>
+  <h1>Produce <span>Guardian</span></h1>
+  <p class="sub">Sign in to see each crate's live status, its trip history and any alerts. Your administrator gave you the username and password.</p>
+  <form id="f">
+    <div id="err" class="err" role="alert" hidden></div>
+    <div><label for="u">Username</label><input id="u" autocomplete="username" required autofocus></div>
+    <div><label for="p">Password</label><input id="p" type="password" autocomplete="current-password" required></div>
+    <button id="go">Sign in</button>
+  </form>
+</main>
+<script>
+document.getElementById('f').addEventListener('submit', function(e){
+  e.preventDefault();
+  var go = document.getElementById('go'), err = document.getElementById('err');
+  go.disabled = true; err.hidden = true;
+  fetch('/api/login', { method:'POST', headers:{'content-type':'application/json'},
+    body: JSON.stringify({ username: document.getElementById('u').value, password: document.getElementById('p').value }) })
+  .then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.error || 'Sign-in failed'); }); })
+  .then(function(){ location.href = '/'; })
+  .catch(function(x){ err.textContent = x.message; err.hidden = false; go.disabled = false; });
+});
+</script>
+</body>
+</html>
